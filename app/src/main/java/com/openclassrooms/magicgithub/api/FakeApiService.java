@@ -2,11 +2,14 @@ package com.openclassrooms.magicgithub.api;
 
 import com.openclassrooms.magicgithub.model.User;
 import java.util.List;
+
+import static com.openclassrooms.magicgithub.api.FakeApiServiceGenerator.FAKE_USERS_RANDOM;
 import static com.openclassrooms.magicgithub.api.FakeApiServiceGenerator.generateUsers;
 
 public class FakeApiService implements ApiService {
 
     private List<User> users = generateUsers();
+    private List<User> fakeUsersList = FAKE_USERS_RANDOM;
 
     /**
      * Return a list of {@link User}
@@ -15,7 +18,7 @@ public class FakeApiService implements ApiService {
     @Override
     public List<User> getUsers() {
         // TODO: A modifier
-        return null;
+        return users;
     }
 
     /**
@@ -25,6 +28,10 @@ public class FakeApiService implements ApiService {
     @Override
     public void generateRandomUser() {
         // TODO: A modifier
+        // create new random user to add:
+        User randomUserToAdd = newRandomUser();
+        // user added to the list
+        users.add(randomUserToAdd);
     }
 
     /**
@@ -33,5 +40,18 @@ public class FakeApiService implements ApiService {
     @Override
     public void deleteUser(User user) {
         // TODO: A modifier
+        users.remove(user);
+    }
+
+    /**
+     * Generate a random {@link User} from the {@link FakeApiServiceGenerator#FAKE_USERS_RANDOM} list
+     * */
+    private User newRandomUser() {
+        // create a random index:
+        int randomFakeUserIndex = (int) (Math.random() * (fakeUsersList.size()));
+        // get user with the random index from the list:
+        User randomUserToAdd = fakeUsersList.get(randomFakeUserIndex);
+        //return a user
+        return randomUserToAdd;
     }
 }
